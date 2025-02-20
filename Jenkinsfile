@@ -8,7 +8,7 @@ stage('Clone Repository') {
 
 steps {
 
-git 'https://github.com/hruthingali/python_jenkins.git'
+git url:'https://github.com/hruthingali/python_jenkins.git',branch:'main'
 
 }
 
