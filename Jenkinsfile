@@ -2,13 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone Repository') {
-            steps {
-                git 'https://github.com/hruthingali/python_jenkins_file.git'
-            }
-        }
-
-        stage('Set Up Python') {
+       stage('Set Up Python') {
             steps {
                 sh 'python3 -m venv venv'  // Create virtual environment
                 sh 'echo "source venv/bin/activate" >> ~/.bashrc'  // Ensure venv is sourced
