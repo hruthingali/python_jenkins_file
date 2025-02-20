@@ -16,6 +16,11 @@ pipeline {
                 sh '. venv/bin/activate && pip install -r requirements.txt'  // Install dependencies
             }
         }
+        stage('Run Python Script') {
+            steps {
+                sh '. venv/bin/activate && python main.py'  // Run Python script
+            }
+        }
 
         stage('Run Tests') {
             steps {
