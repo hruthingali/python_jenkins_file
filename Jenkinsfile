@@ -2,28 +2,36 @@ pipeline {
     agent any
 
     stages {
-            stage('Set Up Python') {
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/hruthingali/python_jenkins_file.git'
+            }
+        }
+
+        stage('Set Up Python') {
             steps {
                 sh 'python3 -m venv venv'  // Create virtual environment
-                sh '. venv/bin/activate'   // Activate virtual environment
+                sh 'echo "source venv/bin/activate" >> ~/.bashrc'  // Ensure venv is sourced
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh '. venv/bin/activate && python -m ensurepip --default-pip'  // Ensure pip is available
+                sh '. venv/bin/activate && pip install --upgrade pip setuptools wheel'  // Upgrade pip
+                sh '. venv/bin/activate && pip install -r requirements.txt'  // Install dependencies
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'pytest test_main.py'
+                sh '. venv/bin/activate && pytest test_main.py'  // Run tests
             }
         }
 
         stage('Build Artifact') {
             steps {
-                sh 'python setup.py sdist'
+                sh '. venv/bin/activate && python setup.py sdist'  // Build Python package
             }
         }
 
